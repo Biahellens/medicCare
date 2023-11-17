@@ -1,11 +1,26 @@
 import React from 'react'
-import { Header } from '../../components'
+import { Header, DoctorCard } from '../../components'
+import { Content, ContentDoctors, TextArea } from './styles'
 
 export default function Home(){
   return(
     <div>
       <Header />
-      <p>oi</p>
+      <Content>
+        <ContentDoctors>
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+          <DoctorCard />
+        </ContentDoctors>
+      </Content>
     </div>
   )
 }

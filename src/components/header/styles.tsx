@@ -45,3 +45,11 @@ export const Image = styled.img<{ $size?: boolean; }>`
   width: ${props => props.$size ? '60px' : '500px'};
   margin-top: ${props => props.$size ? '0' : '16%'};
 `
+
+export const Title = styled.h1`
+  color: white;
+`
+export const TextArea = styled.div`
+  display: flex;
+  align-items: center;
+`
