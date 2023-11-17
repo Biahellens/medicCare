@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": ["sqlite3"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
