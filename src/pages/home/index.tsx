@@ -6,6 +6,7 @@ interface Doctor {
   id: number;
   specialty: string;
   name: string;
+  rating: number;
 }
 
 function Home() {
