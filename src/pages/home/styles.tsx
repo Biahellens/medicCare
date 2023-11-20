@@ -26,3 +26,37 @@ export const ContentDoctors = styled.div`
   align-content: space-around;
   padding: 2rem;
 `
+
+export const Title = styled.h1`
+  width: 100%;
+  text-align: center;
+  color: #4682B4	
+`
+
+export const SearchDiv = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Search = styled.input`
+  background-color: #FFFFFF;
+  width: 320px;
+  height: 30px;
+  display: flex;
+  border: 2px solid #000080;
+  border-radius: 10px;
+  font-size: 14px;
+`
+
+export const Button = styled.button`
+  background-color: #000080;
+  color: #FFFFFF;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #000080;
+  border-radius: 4px;
+  cursor: pointer
+`

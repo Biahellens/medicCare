@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+
 
 import icon from '../../assets/icon.svg'
-import { Content, Main, Detail, SearchDiv, Search, Image, Title, TextArea } from './styles'
+import { Content, Main, Detail, Image, Title, TextArea } from './styles'
 
-function Header() {
+function Header(){
   return(
     <Content>
       <Main>
@@ -11,9 +12,7 @@ function Header() {
           <Image  $size src={icon}/>
           <Title>MediCare</Title>
         </TextArea>
-        <SearchDiv>
-          <Search placeholder="Pesquisar um médico..." />
-        </SearchDiv>
+
       </Main>
       <Detail />
     </Content>

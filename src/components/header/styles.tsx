@@ -25,21 +25,7 @@ export const Detail = styled.div`
   border-radius: 0 0 20px 20px;
 `
 
-export const SearchDiv = styled.div`
-  width: 80%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-`
 
-export const Search = styled.input`
-  background-color: #FFFFFF;
-  width: 320px;
-  height: 30px;
-  display: flex;
-  border-radius: 10px;
-  font-size: 10px;
-`
 
 export const Image = styled.img<{ $size?: boolean; }>`
   width: ${props => props.$size ? '60px' : '500px'};
