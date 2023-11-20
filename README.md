@@ -1,7 +1,7 @@
 ![medicare](https://github.com/Biahellens/medicCare/blob/main/public/favicon.svg)
 #  MediCare
 
-Um sistema para agendamentos de consultas médicas.
+A versão web de um sistema para agendamentos de consultas médicas.
 
 - [MediCare](#VagaKey)
   - [Tecnologias](#tecnologias)
