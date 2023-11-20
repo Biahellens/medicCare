@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { DoctorComplete } from '../../components/doctorCard/doctorProps';
 import { Header } from '../../components'
-import { Content, ContentImage, Image, TextArea, Text, ContentCalendar, ContentStars, Button, Linkinho} from './styles'
+import { Content, ContentImage, Image, TextArea, Text, ContentCalendar, ContentStars, Button} from './styles'
 import doctor from '../../assets/doctor.svg'
 import starsOne from '../../assets/startsOne.png';
 import starsTwo from '../../assets/startsTwo.png';
@@ -16,6 +17,7 @@ interface DoctorDetailsProps {
 }
 
 const DoctorDetails: React.FC<DoctorDetailsProps> = ({ id }) => {
+  const navigate = useNavigate();
   const [doctorDetails, setDoctorDetails] = useState<DoctorComplete | null>(null);
 
   const ratingImages: Record<number, string> = {
@@ -55,6 +57,10 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = ({ id }) => {
     selectedRatingImage = ratingImages[doctorDetails.rating] || starsFive;
   }
 
+  const handleCardClick = () => {
+    navigate(`/formDoctor/${id}`);
+  };
+
   return (
     <div>
       <Header/>
@@ -76,9 +82,7 @@ const DoctorDetails: React.FC<DoctorDetailsProps> = ({ id }) => {
                 <Image src={phone} alt="Phone" /> {doctorDetails.phone}
               </Text>
               <Text>Ou via MediCare</Text>
-              <Linkinho to='/'>
-                <Button>Agendar</Button>
-              </Linkinho>
+              <Button onClick={handleCardClick}>Agendar</Button>
             </ContentCalendar>
             </>
           ) : (
