@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import sqlite3 from 'sqlite3';
 
@@ -7,6 +7,7 @@ const port = 3001;
 const db = new sqlite3.Database('src/database/mediCare.db');
 
 app.use(cors());
+app.use(express.json());
 
 // Rota para obter todos os médicos
 app.get('/api/doctors', (req, res) => {
@@ -57,6 +58,63 @@ app.get('/api/doctor', (req, res) => {
       res.json(rows);
     }
   );
+});
+
+// Rota para inserir agendamentos
+app.post('/api/appointments', async (req: Request, res: Response) => {
+  console.log('Request body:', req.body);
+  try {
+    const requestBody = req.body as any;
+
+    if (
+      requestBody &&
+      'doctorId' in requestBody &&
+      'userId' in requestBody &&
+      'medicalPlan' in requestBody &&
+      'email' in requestBody &&
+      'phone' in requestBody &&
+      'medical_Appointment' in requestBody
+    ) {
+      const {
+        doctorId,
+        userId,
+        medicalPlan,
+        email,
+        phone,
+        medical_Appointment,
+      } = requestBody;
+
+      const result = await new Promise<{ lastID: number }>((resolve, reject) => {
+        db.run(
+          'INSERT INTO MedicalAppointment (doctor_id, user_id, medical_plan, email, phone, medical_Appoiment) VALUES (?, ?, ?, ?, ?, ?)',
+          [doctorId, userId, medicalPlan, email, phone, medical_Appointment],
+          function (err) {
+            if (err) {
+              reject(err);
+            } else {
+              resolve({ lastID: this.lastID });
+            }
+          }
+        );
+      });
+
+      res.json({
+        success: true,
+        appointmentId: result.lastID,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        error: 'Invalid request body',
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal Server Error',
+    });
+  }
 });
 
 app.listen(port, () => {
