@@ -26,11 +26,29 @@ app.get('/api/doctors', (req, res) => {
 // Rota para pesquisar médicos
 app.get('/api/search', (req, res) => {
   const search = req.query.termo;
-  console.log('Recebida solicitação para /api/doctors');
+  console.log('Recebida solicitação para /api/search');
 
   db.all(
     'SELECT * FROM Doctors WHERE name LIKE ? OR specialty LIKE ?',
     [`%${search}%`, `%${search}%`],
+    (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: 'Erro ao pesquisar no banco de dados' });
+      }
+
+      res.json(rows);
+    }
+  );
+});
+
+// Rota para pesquisar médicos
+app.get('/api/doctor', (req, res) => {
+  const data = req.query.id;
+  console.log('Recebida solicitação para /api/doctor');
+
+  db.all(
+    'SELECT * FROM Doctors WHERE id == ?',
+    [`${data}`],
     (err, rows) => {
       if (err) {
         return res.status(500).json({ error: 'Erro ao pesquisar no banco de dados' });
