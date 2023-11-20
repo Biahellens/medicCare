@@ -13,24 +13,14 @@ import {
   Button,
   ContentButton,
 } from './styles';
-import { DoctorForm, UserForm } from './formProps';
+import { DoctorForm } from './formProps';
 
 interface DoctorFormProps {
   id: string;
 }
 
-// Adicione a propriedade onCheckboxChange à interface CalendarioConsultaProps
-interface CalendarioConsultaProps {
-  diasDisponiveis: { [key: string]: number };
-  onCheckboxChange: (day: string, time: string) => void;
-}
-
 const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
   const navigate = useNavigate();
-
-  const handleCardClick = () => {
-    navigate(`/`);
-  };
 
   const [doctorForm, setDoctorForm] = useState<DoctorForm | null>(null);
   const [appointmentData, setAppointmentData] = useState({
@@ -52,17 +42,17 @@ const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
     Domingo: 0,
   };
 
-  // Inicialize handleAppointmentSubmit fora do bloco condicional
+  const userId = localStorage.getItem('userId');
+
   const handleAppointmentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      console.log('Trying to submit appointment:', appointmentData);
       const response = await axios.post(
         'http://localhost:3001/api/appointments',
         {
           doctorId: doctorForm?.id,
-          userId: 1,
+          userId: userId,
           medicalPlan: appointmentData.medicalPlan,
           email: appointmentData.email,
           phone: appointmentData.phone,
@@ -74,21 +64,12 @@ const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
           },
         }
       );
-
+      navigate(`/`);
       console.log('Appointment created:', response.data);
     } catch (error) {
       console.error('Error creating appointment:', error);
     }
   };
-
-  console.log('Trying to submit appointment:', {
-    doctorId: doctorForm?.id,
-    userId: 1, // Substitua pelo ID do usuário real ou obtenha-o de alguma forma
-    medicalPlan: appointmentData.medicalPlan,
-    email: appointmentData.email,
-    phone: appointmentData.phone,
-    medical_Appointment: `${appointmentData.selectedDay} - ${appointmentData.selectedTime}`,
-  });
 
   useEffect(() => {
     const fetchDoctorForm = async (doctorId: string) => {
@@ -127,8 +108,6 @@ const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
       selectedTime: time,
     });
   };
-
-  console.log('Appointment Data:', appointmentData);
 
   if (doctorForm !== null) {
     diasDisponiveis = {
@@ -186,7 +165,7 @@ const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
                   />
                 </ContentCalendar>
                 <ContentButton>
-                  <Button type='submit' disabled={!doctorForm} onClick={handleCardClick}>Agendar</Button>
+                  <Button type='submit' disabled={!doctorForm}>Agendar</Button>
                 </ContentButton>
               </form>
             </FormContent>

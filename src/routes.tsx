@@ -1,4 +1,3 @@
-// AppRoutes.tsx
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";

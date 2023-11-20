@@ -13,8 +13,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post<{ token: string }>('http://localhost:3001/api/login', { email, medicalPlan });
+      const response = await axios.post<{ token: string, userId: number }>('http://localhost:3001/api/login', { email, medicalPlan });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data.userId.toString());
 
       navigate(`/`);
     } catch (error) {
