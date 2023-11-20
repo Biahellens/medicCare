@@ -140,6 +140,44 @@ app.post('/api/login', async (req: Request, res: Response) => {
   });
 });
 
+// Rota para registrar um novo usuário
+app.post('/api/register', async (req: Request, res: Response) => {
+  try {
+    const { name, phone, email, medicalPlan, age, gender } = req.body;
+
+    // Inserir dados do usuário no banco de dados
+    const result = await new Promise<{ lastID: number }>((resolve, reject) => {
+      db.run(
+        'INSERT INTO Users (name, phone, email, medical_plan, age, gender) VALUES (?, ?, ?, ?, ?, ?)',
+        [name, phone, email, medicalPlan, age, gender],
+        function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({ lastID: this.lastID });
+          }
+        }
+      );
+    });
+
+    // Gerar token JWT
+    const token = jwt.sign({ userId: result.lastID }, 'seuSegredoJWT', { expiresIn: '1h' });
+
+    res.json({
+      success: true,
+      token,
+      userId: result.lastID,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal Server Error',
+    });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Servidor está ouvindo na porta ${port}`);
