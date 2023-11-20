@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import sqlite3 from 'sqlite3';
+import jwt from 'jsonwebtoken';
+import { User } from '../pages/login/userProps'
+
 
 const app = express();
 const port = 3001;
@@ -116,6 +119,27 @@ app.post('/api/appointments', async (req: Request, res: Response) => {
     });
   }
 });
+
+// Rota para autenticação
+app.post('/api/login', async (req: Request, res: Response) => {
+  const { email, medicalPlan } = req.body;
+
+  // Consulte o banco de dados para validar as credenciais do usuário
+  const query = 'SELECT * FROM Users WHERE email = ? AND medical_plan = ?';
+  db.get(query, [email, medicalPlan], (err, user: User) => {
+    if (err || !user) {
+      return res.status(401).json({ error: 'Credenciais inválidas' });
+    }
+
+    // Gere um token JWT
+    const token = jwt.sign({ userId: user.id, email: user.email }, 'suaChaveSecreta', {
+      expiresIn: '1h', // Tempo de expiração do token
+    });
+
+    res.json({ token });
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor está ouvindo na porta ${port}`);

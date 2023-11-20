@@ -2,7 +2,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
-import { Home, DoctorDetails, FormDoctor } from './pages';
+import { Home, DoctorDetails, FormDoctor, Login } from './pages';
 
 const AppRoutes = () => {
   return (
@@ -11,6 +11,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/doctorDetails/:id" element={<DoctorDetailsPage />} />
         <Route path="/formDoctor/:id" element={<FormDoctorPage />} />
+        <Route path='/Login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Header, CalendarioConsulta } from '../../components';
 import {
@@ -25,6 +26,12 @@ interface CalendarioConsultaProps {
 }
 
 const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/`);
+  };
+
   const [doctorForm, setDoctorForm] = useState<DoctorForm | null>(null);
   const [appointmentData, setAppointmentData] = useState({
     name: '',
@@ -179,7 +186,7 @@ const FormDoctor: React.FC<DoctorFormProps> = ({ id }) => {
                   />
                 </ContentCalendar>
                 <ContentButton>
-                  <Button type='submit' disabled={!doctorForm}>Agendar</Button>
+                  <Button type='submit' disabled={!doctorForm} onClick={handleCardClick}>Agendar</Button>
                 </ContentButton>
               </form>
             </FormContent>
